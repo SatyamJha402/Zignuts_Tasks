@@ -78,3 +78,55 @@ const myNum = [1, 2, 3, 4, 5, 6]
 //         return (acc + currval)}
 //     ,initvalue)
 // console.log(newArr)
+
+// const full = xyz("mr.", "spongebob")
+// function xyz(...params) {
+//     return params.join(" ")
+// }
+// console.log(full);
+
+// let name = {
+//     first : "satyam",
+//     last : "jha",
+//     fullname:{
+//         // first : "some",
+//         // last : "name",
+//         printfullname : function(){
+//             const innerf = () => {
+//                 console.log(this.first + this.last);
+//             }
+//             innerf();
+//     }
+// }   
+// }
+// name.fullname.printfullname();
+
+// console.log(isNaN("HELLO"));
+
+// var emp = {
+//     company:"some",
+//     name:"another"
+// }
+
+// emp.salary = 1000
+
+// delete emp.company
+// delete emp.name
+// delete emp.salary
+
+// console.log(emp);
+
+// function x(a){
+//     a();
+//     console.log("x");
+// };
+
+// x(function y(){
+//     console.log("y");
+// });
+
+var hello = setTimeout(() => {
+    console.log("hello");
+}, 5000);
+
+hello()

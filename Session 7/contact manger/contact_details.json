@@ -1,0 +1,15 @@
+{
+    "contacts": [
+        {
+            "name": "Alice",
+            "phones": ["12345", "98765"],
+            "emails": ["alice@example.com", "alice.work@example.com"]
+        },
+        {
+            "name": "Bob",
+            "phones": ["67890"],
+            "emails": ["bob@example.com"]
+        }
+    ],
+    "last_updated": "2025-09-14"
+}
