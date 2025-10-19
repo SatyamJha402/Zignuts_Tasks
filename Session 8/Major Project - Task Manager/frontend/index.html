@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./style.css">
+    <title>Task-Manager</title>
+</head>
+<body>
+    <header>
+        <h1>Task-Manager</h1>
+    </header>
+
+
+    <input type="text" class="search" placeholder="Search task">
+<br>
+<br>
+
+    <form action="">
+        <input type="text" class="task-input" placeholder="Your Task">
+        <input type="text" class="task-desc-input" placeholder="Task description">
+        <input type="date" class="due-date-input" placeholder="">
+
+        <button class="task-button" type="submit">
+            <i class="fas fa-plus-square"></i>
+        </button>
+
+        <button class="sort-date-btn" type="button">|Date|</button>
+
+        <div class="priority">
+            <select name="tasks" class="sort-tasks">
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+        </div>
+
+        <div class="status">
+            <select name="tasks" class="filter-tasks">
+                <option value="all">All</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="task-container">
+        <ul class="task-list"></ul>
+    </div>
+
+    <script src="./app.js"></script>
+    
+</body>
+</html>
