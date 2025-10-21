@@ -1,4 +1,3 @@
-/* ======= Base ======= */
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +14,109 @@ body {
     align-items: center;
 }
 
-/* ======= Header & Form ======= */
+.auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    width: 100%;
+    padding: 2rem;
+}
+
+.login-form, .register-form {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.login-form h2, .register-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #355c7d;
+    font-size: 2rem;
+}
+
+.login-form input, .register-form input {
+    width: 100%;
+    padding: 0.9rem;
+    margin-bottom: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.login-form input:focus, .register-form input:focus {
+    border-color: #355c7d;
+}
+
+.login-form button[type="submit"], .register-form button[type="submit"] {
+    width: 100%;
+    background: #355c7d;
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.login-form button[type="submit"]:hover, .register-form button[type="submit"]:hover {
+    background: #6c5b7b;
+}
+
+.login-form p, .register-form p {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.show-register, .show-login {
+    background: none;
+    border: none;
+    color: #355c7d;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+.show-register:hover, .show-login:hover {
+    color: #6c5b7b;
+}
+
+.task-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    background: #ff6f47;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.logout-btn:hover {
+    background: #d95d3b;
+}
+
 header {
     font-size: 2.5rem;
     font-weight: 600;
@@ -24,7 +125,7 @@ header {
     letter-spacing: 1px;
 }
 
-form {
+form.task-form {
     margin: 2rem 0;
     display: flex;
     gap: 1rem;
@@ -32,7 +133,7 @@ form {
     flex-wrap: wrap;
 }
 
-form input {
+form.task-form input {
     padding: 0.8rem 1rem;
     font-size: 1.2rem;
     border-radius: 10px;
@@ -41,7 +142,7 @@ form input {
     width: 250px;
 }
 
-form button {
+form.task-form button {
     background: #355c7d;
     color: white;
     border: none;
@@ -52,11 +153,10 @@ form button {
     transition: background 0.3s ease;
 }
 
-form button:hover {
+form.task-form button:hover {
     background: #6c5b7b;
 }
 
-/* ======= Search Input ======= */
 .search {
     padding: 0.7rem 1rem;
     font-size: 1.1rem;
@@ -64,10 +164,10 @@ form button:hover {
     border: none;
     outline: none;
     width: 300px;
-    margin-top: 1rem;
+    margin: 1rem auto;
+    display: block;
 }
 
-/* ======= Task Container ======= */
 .task-container {
     display: flex;
     flex-direction: column;
@@ -82,21 +182,17 @@ form button:hover {
     list-style: none;
 }
 
-/* ======= Task Card ======= */
 .task {
-    min-width: 80%;
-    max-width: 90%;
-    width: 85%;
     background: white;
     margin: 1rem auto;
     padding: 1rem 1.2rem;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
     transition: transform 0.4s ease, opacity 0.4s ease;
+    cursor: pointer;
 }
 
 .task.fall {
@@ -109,12 +205,19 @@ form button:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* ======= Task Title & Description ======= */
+.task-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
 .task-item {
     font-size: 1.3rem;
     font-weight: 600;
     color: #333;
     word-break: break-word;
+    flex: 1;
 }
 
 .task-desc {
@@ -122,18 +225,27 @@ form button:hover {
     font-size: 1rem;
     color: #555;
     margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid #f67280;
 }
 
 .task.show-desc .task-desc {
     display: block;
 }
 
-/* ======= Task Buttons ======= */
+.due-date {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.3rem;
+}
+
 .task-buttons {
     display: flex;
     gap: 0.5rem;
     flex-direction: row;
     align-items: center;
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
 .task-buttons button {
@@ -146,7 +258,7 @@ form button:hover {
     transition: background 0.3s ease;
 }
 
-.complete-btn, .trash-btn {
+.complete-btn, .trash-btn, .edit-btn {
     border: none;
     cursor: pointer;
     color: white;
@@ -164,6 +276,14 @@ form button:hover {
     background: #4ca364;
 }
 
+.edit-btn {
+    background: #4a90e2;
+}
+
+.edit-btn:hover {
+    background: #357abd;
+}
+
 .trash-btn {
     background: #ff6f47;
 }
@@ -172,7 +292,6 @@ form button:hover {
     background: #d95d3b;
 }
 
-/* ======= Priority Button ======= */
 .priority-status {
     border: none;
     padding: 0.3rem 0.7rem;
@@ -187,18 +306,16 @@ form button:hover {
     background: #e0e0e0;
 }
 
-[data-priority="1"] { background: #d4edda; color: #256029; }  /* Low */
-[data-priority="2"] { background: #fff3cd; color: #856404; }  /* Medium */
-[data-priority="3"] { background: #f8d7da; color: #721c24; }  /* High */
+[data-priority="1"] { background: #d4edda; color: #256029; }
+[data-priority="2"] { background: #fff3cd; color: #856404; }
+[data-priority="3"] { background: #f8d7da; color: #721c24; }
 
-/* ======= Completed State ======= */
 .completed .task-item,
 .completed .task-desc {
     text-decoration: line-through;
     opacity: 0.6;
 }
 
-/* ======= Filters / Dropdowns ======= */
 .filter-tasks, .sort-tasks {
     appearance: none;
     outline: none;
