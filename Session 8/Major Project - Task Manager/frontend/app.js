@@ -1,7 +1,7 @@
 const BASE_URL = "http://127.0.0.1:8000/tasks/";
 const AUTH_URL = "http://127.0.0.1:8000/";
 
-// Selectors
+// Selectors for authentication and task management sections
 const authSection = document.querySelector('.auth-section');
 const taskSection = document.querySelector('.task-section');
 const loginForm = document.querySelector('.login-form');
@@ -10,6 +10,7 @@ const showRegisterBtn = document.querySelector('.show-register');
 const showLoginBtn = document.querySelector('.show-login');
 const logoutBtn = document.querySelector('.logout-btn');
 
+// Task-related DOM elements
 const search = document.querySelector('.search');
 const taskInput = document.querySelector('.task-input');
 const taskDescInput = document.querySelector('.task-desc-input');
@@ -20,7 +21,7 @@ const filterByStatus = document.querySelector('.filter-tasks');
 const sortByPriority = document.querySelector('.sort-tasks');
 const sortByDateBtn = document.querySelector('.sort-date-btn');
 
-// Event Listeners
+// Event Listeners for page load and all user interactions
 document.addEventListener('DOMContentLoaded', checkAuth);
 loginForm?.addEventListener('submit', handleLogin);
 registerForm?.addEventListener('submit', handleRegister);
@@ -34,7 +35,7 @@ sortByPriority?.addEventListener('change', sortPriority);
 sortByDateBtn?.addEventListener('click', sortByDueDate);
 search?.addEventListener('input', searchTasks);
 
-
+// Check if user is logged in and load tasks if authenticated
 function checkAuth() {
     const token = localStorage.getItem('access_token');
     if (token) {
@@ -45,16 +46,19 @@ function checkAuth() {
     }
 }
 
+// Show login/register section
 function showAuthSection() {
     if (authSection) authSection.style.display = 'block';
     if (taskSection) taskSection.style.display = 'none';
 }
 
+// Show task section (after login/register)
 function showTaskSection() {
     if (authSection) authSection.style.display = 'none';
     if (taskSection) taskSection.style.display = 'block';
 }
 
+// Toggle between login and register forms
 function toggleAuthForms(form) {
     if (form === 'register') {
         loginForm.style.display = 'none';
@@ -65,11 +69,13 @@ function toggleAuthForms(form) {
     }
 }
 
+// Handle user login request
 async function handleLogin(e) {
     e.preventDefault();
     const username = document.querySelector('#login-username').value;
     const password = document.querySelector('#login-password').value;
 
+    // Send login request to server
     try {
         const response = await fetch(`${AUTH_URL}login/`, {
             method: 'POST',
@@ -79,6 +85,7 @@ async function handleLogin(e) {
 
         if (response.ok) {
             const data = await response.json();
+            // Save tokens and user info locally
             localStorage.setItem('access_token', data.access);
             localStorage.setItem('refresh_token', data.refresh);
             localStorage.setItem('username', data.username);
@@ -93,12 +100,14 @@ async function handleLogin(e) {
     }
 }
 
+// Handle new user registration
 async function handleRegister(e) {
     e.preventDefault();
     const username = document.querySelector('#register-username').value;
     const email = document.querySelector('#register-email').value;
     const password = document.querySelector('#register-password').value;
 
+    // Send registration request to server
     try {
         const response = await fetch(`${AUTH_URL}register/`, {
             method: 'POST',
@@ -108,6 +117,7 @@ async function handleRegister(e) {
 
         if (response.ok) {
             const data = await response.json();
+            // Store tokens and auto-login after registration
             localStorage.setItem('access_token', data.access);
             localStorage.setItem('refresh_token', data.refresh);
             localStorage.setItem('username', data.user.username);
@@ -123,6 +133,7 @@ async function handleRegister(e) {
     }
 }
 
+// Log out and clear session data
 function handleLogout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
@@ -131,12 +142,12 @@ function handleLogout() {
     showAuthSection();
 }
 
-
+// Generic function to make API requests with token handling
 async function fetchData(url, method = "GET", data = null) {
     const token = localStorage.getItem('access_token');
     const options = {
         method,
-        headers: {
+        headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
@@ -145,9 +156,10 @@ async function fetchData(url, method = "GET", data = null) {
 
     const res = await fetch(url, options);
     
-
+    // If token expired, try refreshing it
     if (res.status === 401) {
         const refreshed = await refreshAccessToken();
+        // Retry original request if token refreshed
         if (refreshed) {
             options.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
             const retryRes = await fetch(url, options);
@@ -161,6 +173,7 @@ async function fetchData(url, method = "GET", data = null) {
     return res.ok ? res.json() : null;
 }
 
+// Refresh access token using refresh token
 async function refreshAccessToken() {
     const refreshToken = localStorage.getItem('refresh_token');
     if (!refreshToken) return false;
@@ -183,7 +196,7 @@ async function refreshAccessToken() {
     return false;
 }
 
-
+// Fetch all tasks from server
 async function getTasks() {
     taskList.innerHTML = '';
     const tasks = await fetchData(BASE_URL);
@@ -191,12 +204,14 @@ async function getTasks() {
     tasks.forEach(task => renderTask(task));
 }
 
+// Add a new task or update existing one
 async function addTask(e) {
     e.preventDefault();
     if (!taskInput.value.trim()) return;
 
     const editId = taskButton.dataset.editId;
 
+    // Update existing task if edit mode is active
     if (editId) {
         const updated = await fetchData(`${BASE_URL}${editId}/`, "PATCH", {
             title: taskInput.value,
@@ -210,6 +225,7 @@ async function addTask(e) {
             delete taskButton.dataset.editId;
         }
     } else {
+        // Create new task
         const newTask = {
             title: taskInput.value,
             description: taskDescInput.value,
@@ -226,11 +242,13 @@ async function addTask(e) {
         }
     }
 
+    // Reset form fields
     taskInput.value = '';
     taskDescInput.value = '';
     dueDate.value = '';
 }
 
+// Render a single task item in DOM
 function renderTask(task) {
     const taskDiv = document.createElement('div');
     taskDiv.classList.add('task');
@@ -242,11 +260,13 @@ function renderTask(task) {
 
     const leftDiv = document.createElement('div');
     
+    // Task title
     const newTask = document.createElement('li');
     newTask.innerText = task.title;
     newTask.classList.add('task-item');
     leftDiv.appendChild(newTask);
 
+    // Due date (display only date part)
     const newDate = document.createElement('div');
     newDate.innerText = task.due_date ? task.due_date.split("T")[0] : '';
     newDate.classList.add('due-date');
@@ -254,7 +274,7 @@ function renderTask(task) {
 
     contentDiv.appendChild(leftDiv);
 
-    // Buttons
+    // Buttons container
     const buttonContainer = document.createElement('div');
     buttonContainer.classList.add('task-buttons');
 
@@ -264,7 +284,7 @@ function renderTask(task) {
     completedButton.classList.add('complete-btn');
     buttonContainer.appendChild(completedButton);
 
-    // Priority button
+    // Priority button setup
     const priorityButton = document.createElement('button');
     priorityButton.classList.add('priority-status');
     let priorityMap = { 'low': 1, 'medium': 2, 'high': 3 };
@@ -272,12 +292,13 @@ function renderTask(task) {
     let p = priorityMap[task.priority] || 1;
     priorityButton.dataset.priority = p;
     updatePriorityButtonText(priorityButton, p);
+
+    // On click, cycle through priorities and update on server
     priorityButton.addEventListener('click', async () => {
         let current = parseInt(priorityButton.dataset.priority);
         let next = (current % 3) + 1;
         priorityButton.dataset.priority = next;
         updatePriorityButtonText(priorityButton, next);
-
         await fetchData(`${BASE_URL}${task.id}/`, "PATCH", { priority: reversePriorityMap[next] });
     });
     buttonContainer.appendChild(priorityButton);
@@ -297,7 +318,7 @@ function renderTask(task) {
     contentDiv.appendChild(buttonContainer);
     taskDiv.appendChild(contentDiv);
 
-
+    // Task description
     const newDesc = document.createElement('p');
     newDesc.innerText = task.description || '';
     newDesc.classList.add('task-desc');
@@ -305,30 +326,35 @@ function renderTask(task) {
 
     taskList.appendChild(taskDiv);
 
+    // Toggle description visibility on task click
     taskDiv.addEventListener('click', (e) => {
         if (e.target.closest('button')) return;
         taskDiv.classList.toggle('show-desc');
     });
 }
 
+// Update text of priority button based on value
 function updatePriorityButtonText(btn, value) {
     if (value === 1) btn.innerHTML = '🔵 Low';
     else if (value === 2) btn.innerHTML = '🟡 Medium';
     else btn.innerHTML = '🔴 High';
 }
 
+// Handle all clicks on task buttons (edit, delete, complete)
 async function handleTaskClick(e) {
     e.preventDefault();
     const task = e.target.closest('.task');
     if (!task) return;
     const id = task.dataset.id;
 
+    // Delete task with animation
     if (e.target.closest('.trash-btn')) {
         task.classList.add('fall');
         await fetchData(`${BASE_URL}${id}/`, "DELETE");
         task.addEventListener('transitionend', () => task.remove());
     }
 
+    // Toggle completion status
     if (e.target.closest('.complete-btn')) {
         const isCompleted = task.classList.contains('completed');
         const newStatus = isCompleted ? 'pending' : 'completed';
@@ -336,6 +362,7 @@ async function handleTaskClick(e) {
         task.classList.toggle('completed');
     }
 
+    // Load task data into input fields for editing
     if (e.target.closest('.edit-btn')) {
         const title = task.querySelector('.task-item').innerText;
         const desc = task.querySelector('.task-desc').innerText;
@@ -350,6 +377,7 @@ async function handleTaskClick(e) {
     }
 }
 
+// Filter tasks based on completion status
 function filterStatus(e) {
     const tasks = taskList.childNodes;
     tasks.forEach(task => {
@@ -368,13 +396,13 @@ function filterStatus(e) {
     });
 }
 
+// Filter tasks based on priority
 function sortPriority(e) {
     const selectedPriority = e.target.value;
     const tasks = taskList.childNodes;
     
     tasks.forEach(task => {
         if (task.nodeType !== 1) return;
-        
         const priorityBtn = task.querySelector('.priority-status');
         const taskPriority = parseInt(priorityBtn.dataset.priority);
         const priorityMap = { 'high': 3, 'medium': 2, 'low': 1 };
@@ -387,6 +415,7 @@ function sortPriority(e) {
     });
 }
 
+// Sort tasks chronologically by due date
 function sortByDueDate() {
     const tasks = Array.from(taskList.children);
     tasks.sort((a, b) => {
@@ -397,20 +426,18 @@ function sortByDueDate() {
     tasks.forEach(task => taskList.appendChild(task));
 }
 
+// Search tasks by title or description
 function searchTasks(e) {
     const searchTerm = e.target.value.toLowerCase();
     const tasks = taskList.childNodes;
     
     tasks.forEach(task => {
         if (task.nodeType !== 1) return;
-        
         const title = task.querySelector('.task-item').innerText.toLowerCase();
         const description = task.querySelector('.task-desc')?.innerText.toLowerCase() || '';
         
-        if (title.includes(searchTerm) || description.includes(searchTerm)) {
-            task.style.display = 'flex';
-        } else {
-            task.style.display = 'none';
-        }
+        task.style.display = (title.includes(searchTerm) || description.includes(searchTerm))
+            ? 'flex'
+            : 'none';
     });
 }

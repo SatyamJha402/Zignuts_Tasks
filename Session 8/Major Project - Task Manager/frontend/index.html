@@ -3,83 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts (Poppins) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="./style.css">
+    
     <title>Task-Manager</title>
 </head>
 <body>
+
+    <!-- Header Section -->
     <header>
         <h1>Task-Manager</h1>
     </header>
 
+    <!-- Authentication Section (Login & Register) -->
     <div class="auth-section">
+
         <!-- Login Form -->
         <form class="login-form">
             <h2>Login</h2>
             <input type="text" id="login-username" placeholder="Username" required>
             <input type="password" id="login-password" placeholder="Password" required>
             <button type="submit">Login</button>
-            <p>Don't have an account? <button type="button" class="show-register">Register</button></p>
+
+            <!-- Switch to Register -->
+            <p>Don't have an account? 
+                <button type="button" class="show-register">Register</button>
+            </p>
         </form>
 
-            <!-- Register Form -->
+        <!-- Register Form (Initially Hidden) -->
         <form class="register-form" style="display: none;">
             <h2>Register</h2>
             <input type="text" id="register-username" placeholder="Username" required>
             <input type="email" id="register-email" placeholder="Email" required>
             <input type="password" id="register-password" placeholder="Password" required>
             <button type="submit">Register</button>
-            <p>Already have an account? <button type="button" class="show-login">Login</button></p>
+
+            <!-- Switch to Login -->
+            <p>Already have an account? 
+                <button type="button" class="show-login">Login</button>
+            </p>
         </form>
     </div>
 
-
+    <!-- Task Section (Visible After Login) -->
     <div class="task-section">
+
+        <!-- Logout Button -->
         <button class="logout-btn">Logout</button>
-    
-    <input type="text" class="search" placeholder="Search task">
-<br>
-<br>
 
-    <form action="" class="task-form">
-        <input type="text" class="task-input" placeholder="Your Task">
-        <input type="text" class="task-desc-input" placeholder="Task description">
-        <input type="date" class="due-date-input" placeholder="">
+        <!-- Search Bar -->
+        <input type="text" class="search" placeholder="Search task">
+        <br><br>
 
-        <button class="task-button" type="submit">
-            <i class="fas fa-plus-square"></i>
-        </button>
+        <!-- Task Form -->
+        <form action="" class="task-form">
+            <input type="text" class="task-input" placeholder="Your Task">
+            <input type="text" class="task-desc-input" placeholder="Task description">
+            <input type="date" class="due-date-input" placeholder="">
+            <button class="task-button" type="submit">
+                <i class="fas fa-plus-square"></i>
+            </button>
 
-        <button class="sort-date-btn" type="button">|Date|</button>
+            <!-- Sort By Date -->
+            <button class="sort-date-btn" type="button">|Date|</button>
 
-        <div class="priority">
-            <select name="tasks" class="sort-tasks">
-                <option value="all">All</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-            </select>
+            <!-- Priority Filter -->
+            <div class="priority">
+                <select name="tasks" class="sort-tasks">
+                    <option value="all">All</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+
+            <!-- Status Filter -->
+            <div class="status">
+                <select name="tasks" class="filter-tasks">
+                    <option value="all">All</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+        </form>
+
+        <!-- Task List Container -->
+        <div class="task-container">
+            <ul class="task-list"></ul>
         </div>
-
-        <div class="status">
-            <select name="tasks" class="filter-tasks">
-                <option value="all">All</option>
-                <option value="completed">Completed</option>
-                <option value="pending">Pending</option>
-            </select>
-        </div>
-    </form>
-
-    <div class="task-container">
-        <ul class="task-list"></ul>
-    </div>
 
     </div>
 
     <script src="./app.js"></script>
-    
+
 </body>
 </html>

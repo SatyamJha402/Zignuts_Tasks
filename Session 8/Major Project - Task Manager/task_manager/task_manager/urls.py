@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+# Define URL patterns
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("tasks.urls")),

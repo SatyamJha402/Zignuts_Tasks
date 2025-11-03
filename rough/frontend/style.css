@@ -1,0 +1,215 @@
+/* ======= Base ======= */
+* {
+    margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f8b195, #f67280, #c06c84);
+  min-height: 100vh;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ======= Header & Form ======= */
+header {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: white;
+  margin-top: 2rem;
+  letter-spacing: 1px;
+}
+
+form {
+  margin: 2rem 0;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+form input {
+  padding: 0.8rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  width: 250px;
+}
+
+form button {
+  background: #355c7d;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+form button:hover {
+  background: #6c5b7b;
+}
+
+/* ======= Task Container ======= */
+.task-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1; /* take all available space */
+}
+
+.task-list {
+  width: 90%;
+  max-width: 650px;
+  list-style: none;
+}
+
+/* ======= Task Card ======= */
+.task {
+    min-width: 70%;
+    max-width: 80%;
+    width: 75%;
+    background: white;
+    margin: 1rem auto;
+    padding: 1rem 1.2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: transform 0.4s ease, opacity 0.4s ease; /* animation for delete */
+}
+
+.task.fall {
+    transform: translateX(150%); /* swipe right effect */
+    opacity: 0;
+}
+
+.task:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ======= Task Header (Title + Actions) ======= */
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  word-break: break-word;
+}
+
+.task-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-end; /* push buttons to the right */
+}
+
+.task-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: row;
+    align-items: center;
+}
+
+.task-buttons button {
+    min-width: 60px;
+    height: 35px;
+    font-size: 0.9rem;
+    padding: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.complete-btn, .trash-btn {
+  border: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.complete-btn {
+  background: #6ac47e;
+}
+.complete-btn:hover {
+  background: #4ca364;
+}
+
+.trash-btn {
+  background: #ff6f47;
+}
+.trash-btn:hover {
+  background: #d95d3b;
+}
+
+.task-desc {
+    display: none;
+    font-size: 1rem;
+    color: #555;
+    margin-top: 0.5rem;
+}
+
+.task.show-desc .task-desc {
+    display: block;
+}
+
+
+/* ======= Priority Indicator ======= */
+.priority-status {
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: auto;
+  transition: background 0.3s;
+}
+
+.priority-status:hover {
+  background: #e0e0e0;
+}
+
+[data-priority="1"] { background: #d4edda; color: #256029; }  /* Low */
+[data-priority="2"] { background: #fff3cd; color: #856404; }  /* Medium */
+[data-priority="3"] { background: #f8d7da; color: #721c24; }  /* High */
+
+/* ======= Completed State ======= */
+.completed .task-title,
+.completed .task-desc {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* ======= Filters (Dropdowns) ======= */
+.select-status, .select-priority {
+  appearance: none;
+  outline: none;
+  border: none;
+  background: white;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.select-status:hover, .select-priority:hover {
+  background: #fafafa;
+}
