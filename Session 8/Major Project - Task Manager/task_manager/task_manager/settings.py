@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'taskpro_db',
-        'USER': 'postgres',
-        'PASSWORD': 'satyam@402',
+        'USER': '[removed]',
+        'PASSWORD': '[password removed]',
         'HOST': 'localhost',
         'PORT': '5432',
     }
